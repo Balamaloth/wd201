@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Application</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+</head>
+
+<body>
+    <h1>Todo Application</h1>
+    <form action="/todo" method="POST">
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <div class="flex gap-2 py-4">
+            <div class="flex-auto">
+                <input type="text" placeholder="What's next?" name="title"
+                    class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm" required />
+            </div>
+            <div class="flex-auto">
+                <input type="date" name="dueDate"
+                    class="border border-gray-300 rounded text-gray-900 w-full p-2 text-sm leading-4	" />
+            </div>
+            <div class="flex-none">
+                <button type="submit" class="bg-green-600 text-white px-5 py-1.5 rounded font-medium mr-2 mb-2">
+                    Add
+                </button>
+            </div>
+        </div>
+    </form>
+    <div>
+        <div>
+            <h2>Overdue</h2>
+            <span id="count-overdue">
+                <%= overdue.length %>
+            </span> <!-- Count of overdue todos -->
+            <%- include('todos.ejs', { title: "Overdue" , data: overdue }) %>
+        </div>
+
+        <div>
+            <h2>Due Today</h2>
+            <span id="count-due-today">
+                <%= dueToday.length %>
+            </span> <!-- Count of due today todos -->
+            <%- include('todos.ejs', { title: "Due Today" , data: dueToday }) %>
+        </div>
+
+        <div>
+            <h2>Due Later</h2>
+            <span id="count-due-later">
+                <%= dueLater.length %>
+            </span> <!-- Count of due later todos -->
+            <%- include('todos.ejs', { title: "Due Later" , data: dueLater }) %>
+        </div>
+
+        <div>
+            <h2>Completed</h2>
+            <span id="count-completed">
+                <%= completed.length %>
+            </span> <!-- Count of completed todos -->
+            <%- include('todos.ejs', { title: "Completed" , data: completed }) %>
+        </div>
+    </div>
+
+    <script>
+        var token = document
+            .querySelector('meta[name="csrf-token"]')
+            .getAttribute("content");
+
+        function updateTodo(id) {
+            fetch(`/todo/${id}/markAsCompleted`, {
+                method: "put",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    _csrf: token,
+                }),
+            })
+                .then((res) => {
+                    window.location.reload();
+                })
+                .catch((err) => console.error(err));
+        }
+
+        function deleteTodo(id) {
+            fetch(`/todo/${id}`, {
+                method: "delete",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    _csrf: token,
+                }),
+            })
+                .then((res) => {
+                    window.location.reload();
+                })
+                .catch((err) => console.error(err));
+        }
+    </script>
+</body>
+
+</html>

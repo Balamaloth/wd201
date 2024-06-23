@@ -1,0 +1,93 @@
+.first {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 6rem;
+    background-color: #f9fafb;
+}
+
+.second {
+
+    position: relative;
+    background-color: #ffffff;
+    padding-left: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid #1a202c;
+    border-color: #1a202c;
+    border-style: solid;
+    border-width: 0.0625rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 32rem;
+    border-radius: 0.5rem;
+    padding-right: 1.5rem;
+
+}
+
+.field {
+    background-color: #f3f4f6;
+    display: inline-block;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #5d10d8;
+    border: 1px solid #cbd5e0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+}
+
+.accept {
+    background-color: #f3f4f6;
+    display: inline-block;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1823f1;
+    border: 1px solid #cbd5e0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+}
+
+.innerField {
+    font-size: 1.25rem;
+    width: 10rem;
+    display: inline-block;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #f80aec;
+}
+
+/* .entries1{
+    position: relative;
+        background-color: #ffffff;       
+        padding-left: 1.5rem;       
+        margin-top: 1.25rem;        
+        padding-top: 2.5rem;       
+        padding-bottom: 2rem;      
+        box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);        
+        border: 1px solid #1a202c;       
+        border-color: #1a202c;        
+        border-style: solid;       
+        border-width: 0.0625rem;       
+        margin-left: auto;       
+        margin-right: auto;       
+        max-width: 32rem;       
+        border-radius: 0.5rem;        
+        padding-right: 1.5rem;
+}  */

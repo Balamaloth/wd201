@@ -1,0 +1,240 @@
+<html>
+
+<head>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Registration Form</title>    
+</head>
+
+<body>
+    <div class="first">
+        <div class="second">
+            <div class="mx-auto max-w-md">
+                <h2 class="text-3xl text-center font-bold leading-tight">
+                    Registration Form
+                </h2>
+                <div class="divide-y divide-gray-300/50">
+                    <div class="space-y-6 py-8 text-base leading-7 text-gray-600">
+                        <form id="input_details">
+                            <label for="name" class="innerField">
+                                Name
+                            </label>
+                            <input required type="text" id="name" name="name" class="field"
+                                placeholder="Enter full name"></br>
+                            <label for="email" class="innerField">
+                                Email
+                            </label>
+                            <input required type="email" id="email" name="email" class="field"
+                                placeholder="Enter email"></br>
+                            <label for="password" class="innerField">
+                                Password
+                            </label>
+                            <input required type="password" id="password" name="password" class="field"
+                                placeholder="Enter password"></br>
+                            <label for="dob" class="innerField">
+                                Date of Birth
+                            </label>
+                            <input required type="date" id="dob" name="dob" class="field"></br>
+                            <label for="acceptTerms" class="innerField">
+                                Accept Terms & Conditions
+                            </label>
+                            <input required type="checkbox" id="acceptTerms" name="acceptTerms" class="accept"></br>
+                            <button type="submit"
+                                class="w-fit rounded-lg shadow-lg px-8 py-4 bg-green-500 text-white hover:bg-green-400 focus:outline-none focus:shadow-outline transition duration-150 ease-in-out">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div
+            class="relative bg-white px-6 mt-5 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:rounded-lg sm:px-10">
+            <div class="mx-auto">
+                <h2 class="text-3xl text-center font-bold leading-tight">
+                    Entries
+                </h2>
+                <div class="divide-y divide-gray-300/50" id="user-entries">
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let today = new Date();
+            let date1 = today.getDate();
+            let month1 = today.getMonth() + 1; 
+            let year1 = today.getFullYear();
+            if (date1 < 10) {
+                date1 = '0' + date1
+            }
+            if (month1 < 10) {
+                month1 = '0' + month1
+            }
+            maxDate = year1 - 18 + '-' + month1 + '-' + date1;
+            minDate = year1 - 55 + '-' + month1 + '-' + date1;
+            document.getElementById("dob").setAttribute("min", minDate);
+            document.getElementById("dob").setAttribute("max", maxDate);
+
+            let userInputs = localStorage.getItem("user-entries");
+            if (userInputs) {
+                userInputs = JSON.parse(userInputs);
+            } else {
+                userInputs = [];
+            }
+
+            const displayEntries = () => {
+                const savedUserInputs = localStorage.getItem("user-entries");
+                let entries = "";
+                if (savedUserInputs) {
+                    const parsedUserInputs = JSON.parse(savedUserInputs);
+                    entries = parsedUserInputs
+                        .map((entry) => {
+                            const name = `<td class='border px-4 py-2'>${entry.name}</td>`;
+                            const email = `<td class='border px-4 py-2'>${entry.email}</td>`;
+                            const password = `<td class='border px-4 py-2'>${entry.password}</td>`;
+                            const dob = `<td class='border px-4 py-2'>${entry.dob}</td>`;
+                            const acceptTerms = `<td class='border px-4 py-2'>${entry.acceptTermsAndConditions}</td>`;
+                            const row = `<tr>${name} ${email} ${password} ${dob} ${acceptTerms}</tr>`;
+                            return row;
+                        })
+                        .join("\n");
+                }
+                var table = `<table class="table-auto w-full"><tr>
+                <th class="px-4 py-2">Name</th>
+                <th class="px-4 py-2">Email</th>
+                <th class="px-4 py-2">Password</th>
+                <th class="px-4 py-2">Dob</th>
+                <th class="px-4 py-2">Accepted terms?</th>
+            </tr>${entries} </table>`;
+                let details = document.getElementById("user-entries");
+                details.innerHTML = table;
+            };
+
+            const saveUserForm = (event) => {
+                event.preventDefault();
+                event.preventDefault();
+                const name = document.getElementById("name").value;
+                const email = document.getElementById("email").value;
+                const password = document.getElementById("password").value;
+                const dob = document.getElementById("dob").value;
+                const acceptTermsAndConditions =
+                    document.getElementById("acceptTerms").checked;
+                const userDetails = {
+                    name,
+                    email,
+                    password,
+                    dob,
+                    acceptTermsAndConditions,
+                };
+                userInputs.push(userDetails);
+                localStorage.setItem("user-entries", JSON.stringify(userInputs));
+
+                displayEntries(); 
+            };
+
+            let form = document.getElementById("input_details");
+            form.addEventListener("submit", saveUserForm, true);
+            displayEntries();
+
+
+    </script>
+    <style>
+        .first {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding-top: 6rem;
+    background-color: #f9fafb;
+}
+
+.second {
+
+    position: relative;
+    background-color: #ffffff;
+    padding-left: 1.5rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.2);
+    border: 1px solid #1a202c;
+    border-color: #1a202c;
+    border-style: solid;
+    border-width: 0.0625rem;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 32rem;
+    border-radius: 0.5rem;
+    padding-right: 1.5rem;
+
+}
+
+.field {
+    background-color: #f3f4f6;
+    display: inline-block;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #5d10d8;
+    border: 1px solid #cbd5e0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+}
+
+.accept {
+    background-color: #f3f4f6;
+    display: inline-block;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #1823f1;
+    border: 1px solid #cbd5e0;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    outline: none;
+}
+
+.innerField {
+    font-size: 1.25rem;
+    width: 10rem;
+    display: inline-block;
+    font-weight: 500;
+    line-height: 1.5;
+    color: #f80aec;
+}
+
+/* .entries1{
+    position: relative;
+        background-color: #ffffff;       
+        padding-left: 1.5rem;       
+        margin-top: 1.25rem;        
+        padding-top: 2.5rem;       
+        padding-bottom: 2rem;      
+        box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.1);        
+        border: 1px solid #1a202c;       
+        border-color: #1a202c;        
+        border-style: solid;       
+        border-width: 0.0625rem;       
+        margin-left: auto;       
+        margin-right: auto;       
+        max-width: 32rem;       
+        border-radius: 0.5rem;        
+        padding-right: 1.5rem;
+}  */
+    </style>
+</body>
+
+</html>
