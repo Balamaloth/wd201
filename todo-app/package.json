@@ -18,7 +18,7 @@
       "prettier --write ."
     ]
   },
-  "author": "kanchana <kanchu.it88@gmail.com>",
+  "author": "balamaloth <balasainik3@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "cheerio": "^1.0.0-rc.12",
