@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <title>Todo</title>
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <%- include("header.ejs") %>
+    <h6 class="m-6">New Here? <a class="text-green-600" href="/signup">Create an account</a></h6>
+    <h6 class="m-6">Already have an account? <a class="text-green-600" href="/login">Sign in here</a></h6>
+   
+  </body>
+</html>

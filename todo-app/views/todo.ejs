@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="csrf-token" content="<%= csrfToken %>" />
+    <title>Todo</title>
+<script>
+    let token = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    const markTodo = (id,value) => {
+        console.log(value)
+          fetch(`/todos/${id}`, {
+            method: "PUT",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body : JSON.stringify({
+                _csrf : token,
+                completed : value
+            })
+           
+          })
+          .then((res) => {
+            if (res.ok) {
+              window.location.reload();
+            }
+          })
+         
+        };
+           
+
+        const deleteTodo = (id)=>{
+            fetch(`/todos/${id}`,{
+                method :"delete",
+                headers : {
+                    "Content-Type": "application/json",
+                },
+            body : JSON.stringify({
+                _csrf : token
+            })
+            }).then(res=>{
+                if(res.ok){
+                    window.location.reload();
+                }
+            })
+        }
+        
+        const logoutbtn = document.getElementById("logoutbtn")
+        const logout = ()=>{
+          window.location.href = '/signout'
+        }
+     
+
+
+</script>
+
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <%- include("header.ejs") %>
+   
+      <button id="logoutbtn" class="m-5 p-2 rounded text-white bg-red-600" onclick="logout()" >signout</button>
+   
+   
+    <form action="/todos" method="post" >
+        <div class="flex items-center w-full">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"/>
+            <div><input name="title" placeholder="What's Next?" required  class="border-2 border-gray-500  m-2 p-2 border-zinc-950 rounded" type="text" /></div>
+            <div><input name="dueDate" type="date" required class="m-2 border-2 border-gray-500  p-2 rounded"/></div>
+            <div><button type="submit" class="m-2  text-white rounded px-5 py-2 bg-green-700">Add</button></div>
+        </div>
+       </form>
+    <%- include('todos.ejs', {title: "Overdue", data: overdue, indicatorId : "count-overdue"}) %>
+    <%- include('todos.ejs', {title: "Due Today", data: duetoday,indicatorId : "count-due-today"}) %>
+    <%- include('todos.ejs', {title: "Due Later", data: duelater,indicatorId : "count-due-later"}) %>
+    <%- include('todos.ejs', {title: "Completed Items", data: completedtodo ,indicatorId : "count-completed"}) %>
+    <% if(messages && messages.error && messages.error.length > 0)  { %>
+      <% for(var i=0; i<messages.error.length; i++) { %>
+        <p class="bg-red-200 my-3 list-none rounded px-4 py-2"><%= messages.error[i] %></p>
+      <% } %>
+    <% } %>
+  </body>
+</html>
