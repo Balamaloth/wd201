@@ -91,6 +91,7 @@ app.get("/signup", (req, res) => {
       csrfToken: req.csrfToken(),
     });
   }
+
 });
 
 app.post("/users", async (req, res) => {
